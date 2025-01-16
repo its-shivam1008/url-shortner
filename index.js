@@ -6,6 +6,8 @@ const urlRoute = require("./routes/url");
 const URL = require("./models/url");
 const { connectToMongoDB } = require("./connection");
 
+app.use(express.urlencoded({extended:false}));
+
 app.use(express.json());
 connectToMongoDB("mongodb://127.0.0.1:27017/urlShortner-DB-1")
   .then(() => console.log("Mongo Connected"))
@@ -30,7 +32,7 @@ app.get("/:shortId", async (req, res) => {
       },
     }
   );
-  res.redirect(entry.redirectURL);
+  res.redirect(entry?.redirectURL);
 });
 
 app.listen(PORT, () => {
